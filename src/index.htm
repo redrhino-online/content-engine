@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js with Vuetify Dropdowns</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.5.10/dist/vuetify.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.5.10/dist/vuetify.min.css" rel="stylesheet">
+    <style>
+        .responsive-container {
+            max-width: 100%;
+            margin: 10px auto;
+        }
+
+        @media (min-width: 600px) {
+            .responsive-container {
+                max-width: 60vw;
+            }
+        }
+
+        .copy-btn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-container class="responsive-container">
+                <v-form>
+                    <v-row>
+                        <v-col cols="12" lg="3" sm="12">
+                            <v-select v-model="selectedFormat" :items="formats" label="Select Format" item-text="title"
+                                item-value="value" return-object></v-select>
+                        </v-col>
+                        <v-col cols="12" lg="3" sm="12">
+                            <v-select v-model="selectedAudience" :items="audiences" label="Select Audience"
+                                item-text="title" item-value="value" return-object></v-select>
+                        </v-col>
+                        <v-col cols="12" lg="3" sm="12">
+                            <v-select v-model="selectedChallenge" :items="challenges" label="Select Challenge"
+                                item-text="title" item-value="value" return-object></v-select>
+                        </v-col>
+                        <v-col cols="12" lg="3" sm="12">
+                            <v-select v-model="selectedSymptom" :items="symptoms" label="Select Symptom"
+                                item-text="title" item-value="value" return-object></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="12" lg="6" sm="12">
+                            <v-select v-model="selectedTone" :items="tones" label="Select Tone"></v-select>
+                        </v-col>
+
+                        <v-col cols="12" lg="6" sm="12">
+                            <v-select v-model="selectedMood" :items="moods" label="Select Mood"></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="12" class="copy-btn">
+                            <v-btn @click="copyToClipboard" color="blue">Copy Prompt</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="12">
+                            <v-btn @click="clearSelections" color="red">Clear All</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="12">
+                            <v-textarea label="Prompt" :value="generatedPrompt" readonly auto-grow></v-textarea>
+                        </v-col>
+                    </v-row>
+                </v-form>
+            </v-container>
+        </v-app>
+    </div>
+
+    <script>
+        const DataService = {
+            getAudiences() {
+                return new Promise((resolve) => {
+                    resolve([
+                        { "title": "Women Recovering from Divorce", "value": "Women Recovering from Divorce" },
+                        { "title": "Single Mothers Seeking Love", "value": "Single Mothers Seeking Love" },
+                        { "title": "Women Who Have Experienced Domestic Abuse", "value": "Women Who Have Experienced Domestic Abuse" },
+                        { "title": "Widowed Women Re-entering the Dating Scene", "value": "Widowed Women Re-entering the Dating Scene" },
+                        { "title": "Women with Childhood Trauma", "value": "Women with Childhood Trauma" },
+                        { "title": "Women Experiencing Infidelity", "value": "Women Experiencing Infidelity" },
+                        { "title": "Women Struggling with Body Image Issues", "value": "Women Struggling with Body Image Issues" },
+                        { "title": "Women in High-Pressure Careers", "value": "Women in High-Pressure Careers" },
+                        { "title": "Women Facing Societal Pressure to Marry", "value": "Women Facing Societal Pressure to Marry" },
+                        { "title": "Women Who Have Been Gaslit in Relationships", "value": "Women Who Have Been Gaslit in Relationships" },
+                        { "title": "Women with a Fear of Commitment", "value": "Women with a Fear of Commitment" },
+                        { "title": "Women Navigating Midlife Changes", "value": "Women Navigating Midlife Changes" },
+                        { "title": "Women Who've Been Cheated On", "value": "Women Who've Been Cheated On" },
+                        { "title": "Women Struggling with Fertility Issues", "value": "Women Struggling with Fertility Issues" },
+                        { "title": "Women Who Have Lost a Child", "value": "Women Who Have Lost a Child" },
+                        { "title": "Women Balancing Work and Relationships", "value": "Women Balancing Work and Relationships" },
+                        { "title": "Women with Caregiver Responsibilities", "value": "Women with Caregiver Responsibilities" },
+                        { "title": "Women in Long-Distance Relationships", "value": "Women in Long-Distance Relationships" },
+                        { "title": "Women Recovering from Addictions", "value": "Women Recovering from Addictions" },
+                        { "title": "Women Healing from Narcissistic Relationships", "value": "Women Healing from Narcissistic Relationships" },
+                        { "title": "Women with Trust Issues", "value": "Women with Trust Issues" },
+                        { "title": "Women Experiencing Empty Nest Syndrome", "value": "Women Experiencing Empty Nest Syndrome" },
+                        { "title": "Women Feeling Pressured by Biological Clocks", "value": "Women Feeling Pressured by Biological Clocks" },
+                        { "title": "Women Transitioning to Motherhood", "value": "Women Transitioning to Motherhood" },
+                        { "title": "Women Feeling Insecure About Aging", "value": "Women Feeling Insecure About Aging" },
+                        { "title": "Women Facing Financial Struggles", "value": "Women Facing Financial Struggles" },
+                        { "title": "Women in Unfulfilling Marriages", "value": "Women in Unfulfilling Marriages" },
+                        { "title": "Women Seeking Personal Growth", "value": "Women Seeking Personal Growth" },
+                        { "title": "Women Who've Lost Their Identity in Relationships", "value": "Women Who've Lost Their Identity in Relationships" },
+                        { "title": "Women Struggling with Postpartum Depression", "value": "Women Struggling with Postpartum Depression" },
+                        { "title": "Women Who Feel Overlooked by Partners", "value": "Women Who Feel Overlooked by Partners" },
+                        { "title": "Women Rebuilding Self-Esteem", "value": "Women Rebuilding Self-Esteem" },
+                        { "title": "Women Navigating Gender Roles in Relationships", "value": "Women Navigating Gender Roles in Relationships" },
+                        { "title": "Women Dealing with Financial Abuse", "value": "Women Dealing with Financial Abuse" },
+                        { "title": "Women with Controlling Partners", "value": "Women with Controlling Partners" },
+                        { "title": "Women Feeling Isolated in Marriage", "value": "Women Feeling Isolated in Marriage" },
+                        { "title": "Women Struggling with Anxiety", "value": "Women Struggling with Anxiety" },
+                        { "title": "Women Who Fear Emotional Intimacy", "value": "Women Who Fear Emotional Intimacy" },
+                        { "title": "Women Living with Chronic Illness", "value": "Women Living with Chronic Illness" },
+                        { "title": "Women Struggling with Overwhelming Expectations", "value": "Women Struggling with Overwhelming Expectations" },
+                        { "title": "Women Going Through Major Life Transitions", "value": "Women Going Through Major Life Transitions" },
+                        { "title": "Women Feeling Inadequate in Relationships", "value": "Women Feeling Inadequate in Relationships" },
+                        { "title": "Women with a Fear of Abandonment", "value": "Women with a Fear of Abandonment" },
+                        { "title": "Women Seeking Love After Trauma", "value": "Women Seeking Love After Trauma" },
+                        { "title": "Women Who've Experienced Emotional Neglect", "value": "Women Who've Experienced Emotional Neglect" },
+                        { "title": "Women Experiencing Depression", "value": "Women Experiencing Depression" },
+                        { "title": "Women Feeling Overwhelmed by Parenthood", "value": "Women Feeling Overwhelmed by Parenthood" },
+                        { "title": "Women Struggling to Find Fulfillment in Life", "value": "Women Struggling to Find Fulfillment in Life" }
+                    ]);
+                });
+            },
+
+            getSymptoms() {
+                return new Promise((resolve) => {
+                    resolve([
+                        { "title": "Self-Sabotage in Relationships", "value": "Self-Sabotage in Relationships" },
+                        { "title": "People-Pleasing Behaviors", "value": "People-Pleasing Behaviors" },
+                        { "title": "Fear of Intimacy", "value": "Fear of Intimacy" },
+                        { "title": "Avoiding Conflict at All Costs", "value": "Avoiding Conflict at All Costs" },
+                        { "title": "Constant Overthinking", "value": "Constant Overthinking" },
+                        { "title": "Inability to Set Boundaries", "value": "Inability to Set Boundaries" },
+                        { "title": "Fear of Being Alone", "value": "Fear of Being Alone" },
+                        { "title": "Comparing Yourself to Others", "value": "Comparing Yourself to Others" },
+                        { "title": "Emotional Numbing", "value": "Emotional Numbing" },
+                        { "title": "Reliving Past Relationships", "value": "Reliving Past Relationships" },
+                        { "title": "Feeling Overwhelmed by Emotions", "value": "Feeling Overwhelmed by Emotions" },
+                        { "title": "Difficulty Trusting Partners", "value": "Difficulty Trusting Partners" },
+                        { "title": "Avoiding Vulnerability", "value": "Avoiding Vulnerability" },
+                        { "title": "Pushing Away Love", "value": "Pushing Away Love" },
+                        { "title": "Over-Attachment to Partners", "value": "Over-Attachment to Partners" },
+                        { "title": "Constant Need for Reassurance", "value": "Constant Need for Reassurance" },
+                        { "title": "Feeling Unworthy of Love", "value": "Feeling Unworthy of Love" },
+                        { "title": "Sabotaging Healthy Relationships", "value": "Sabotaging Healthy Relationships" },
+                        { "title": "Fear of Abandonment", "value": "Fear of Abandonment" },
+                        { "title": "Struggling to Communicate Needs", "value": "Struggling to Communicate Needs" },
+                        { "title": "Feelings of Hopelessness", "value": "Feelings of Hopelessness" },
+                        { "title": "Difficulty Letting Go of the Past", "value": "Difficulty Letting Go of the Past" },
+                        { "title": "Low Self-Esteem", "value": "Low Self-Esteem" },
+                        { "title": "Feeling Emotionally Exhausted", "value": "Feeling Emotionally Exhausted" },
+                        { "title": "Doubting Your Self-Worth", "value": "Doubting Your Self-Worth" },
+                        { "title": "Emotional Withdrawal from Partners", "value": "Emotional Withdrawal from Partners" },
+                        { "title": "Clinging to Unhealthy Relationships", "value": "Clinging to Unhealthy Relationships" },
+                        { "title": "Overanalyzing Every Interaction", "value": "Overanalyzing Every Interaction" },
+                        { "title": "Feeling Like a Burden", "value": "Feeling Like a Burden" },
+                        { "title": "Fear of Confrontation", "value": "Fear of Confrontation" },
+                        { "title": "Inability to Express Feelings", "value": "Inability to Express Feelings" },
+                        { "title": "Fear of Being Vulnerable", "value": "Fear of Being Vulnerable" },
+                        { "title": "Obsessing Over Perceived Flaws", "value": "Obsessing Over Perceived Flaws" },
+                        { "title": "Feeling Overwhelmed by Loneliness", "value": "Feeling Overwhelmed by Loneliness" },
+                        { "title": "Self-Isolation", "value": "Self-Isolation" },
+                        { "title": "Fear of Rejection", "value": "Fear of Rejection" },
+                        { "title": "Avoiding Deep Connections", "value": "Avoiding Deep Connections" },
+                        { "title": "Constant Fear of Being Hurt", "value": "Constant Fear of Being Hurt" },
+                        { "title": "Shutting Down Emotionally", "value": "Shutting Down Emotionally" },
+                        { "title": "Feeling Overwhelmed by Decision-Making", "value": "Feeling Overwhelmed by Decision-Making" },
+                        { "title": "Seeking External Validation", "value": "Seeking External Validation" },
+                        { "title": "Emotional Insecurity", "value": "Emotional Insecurity" },
+                        { "title": "Difficulty Forgiving Yourself", "value": "Difficulty Forgiving Yourself" },
+                        { "title": "Being Overly Critical of Yourself", "value": "Being Overly Critical of Yourself" },
+                        { "title": "Ruminating on Past Mistakes", "value": "Ruminating on Past Mistakes" },
+                        { "title": "Difficulty Feeling Content", "value": "Difficulty Feeling Content" },
+                        { "title": "Feeling Unworthy of Happiness", "value": "Feeling Unworthy of Happiness" },
+                        { "title": "Fear of Expressing Needs", "value": "Fear of Expressing Needs" },
+                        { "title": "Internalizing Others' Expectations", "value": "Internalizing Others' Expectations" },
+                        { "title": "Overworking to Prove Your Worth", "value": "Overworking to Prove Your Worth" }
+                    ]);
+                });
+            },
+
+            getChallenges() {
+                return new Promise((resolve) => {
+                    resolve([
+                        {
+                            "title": "Carrying the Weight of Past Relationships",
+                            "value": "Carrying the Weight of Past Relationships: You might find yourself replaying old hurts and disappointments, unable to fully trust new partners because of past betrayals. This emotional baggage can lead to fear of vulnerability, making it difficult to open up and connect on a deep level."
+                        },
+                        {
+                            "title": "Unresolved Pain Leading to Self-Sabotage",
+                            "value": "Unresolved Pain Leading to Self-Sabotage: Perhaps you notice patterns where things start off well, but then you or your partner do something to undermine the relationship. This self-sabotage often stems from unhealed emotional wounds, causing you to push love away even when you crave it."
+                        },
+                        {
+                            "title": "Feeling Stuck in a Cycle of Guilt and Shame",
+                            "value": "Feeling Stuck in a Cycle of Guilt and Shame: Many women carry a deep sense of guilt or shame related to past experiences—whether from a relationship that didn’t work out, mistakes they believe they made, or societal pressures. This can manifest as low self-esteem, making it hard to believe you deserve a loving, fulfilling relationship."
+                        },
+                        {
+                            "title": "Attracting the Wrong Partners Repeatedly",
+                            "value": "Attracting the Wrong Partners Repeatedly: You may find yourself drawn to the same types of partners—emotionally unavailable, controlling, or otherwise incompatible—over and over again. This pattern can be incredibly frustrating, leading to a sense of hopelessness and questioning if you’ll ever find the right match."
+                        },
+                        {
+                            "title": "Fear of Abandonment or Rejection",
+                            "value": "Fear of Abandonment or Rejection: If you’ve experienced past rejection or abandonment, it’s common to develop a fear of these happening again. This fear might cause you to cling too tightly to partners, or conversely, push them away preemptively to avoid getting hurt."
+                        },
+                        {
+                            "title": "Difficulty Establishing Healthy Boundaries",
+                            "value": "Difficulty Establishing Healthy Boundaries: Without understanding your attachment style, you might struggle with setting and maintaining boundaries in your relationships. This can lead to unhealthy dynamics, where you either overextend yourself or feel taken advantage of, leaving you emotionally drained."
+                        },
+                        {
+                            "title": "Struggling to Find or Keep Quality Partners",
+                            "value": "Struggling to Find or Keep Quality Partners: Despite your best efforts, you may find it difficult to meet or maintain relationships with partners who are truly compatible. This can lead to frustration and self-doubt, as you wonder why you can’t seem to attract the kind of love you desire."
+                        },
+                        {
+                            "title": "Doubting Your Worthiness for True Love",
+                            "value": "Doubting Your Worthiness for True Love: After repeated disappointments, it’s easy to start questioning whether you deserve the love you’re seeking. This doubt can create a self-fulfilling prophecy, where your fear of not being good enough prevents you from fully engaging with potential partners."
+                        },
+                        {
+                            "title": "Feeling Overwhelmed by the Dating World",
+                            "value": "Feeling Overwhelmed by the Dating World: Navigating modern dating can be overwhelming, especially with the pressures of online dating, societal expectations, and the fear of rejection. You might feel lost, unsure of how to present yourself or where to find the right person."
+                        }
+                    ]);
+                });
+            },
+
+            getFormats() {
+                return new Promise((resolve) => {
+                    resolve([
+                        {
+                            title: 'Instagram Carousel Series',
+                            value: `Prompt for Instagram Carousel Post Creation:
+
+You are tasked with creating a highly engaging Instagram carousel post series that dives deep into an emotional, relational, or personal growth topic. The tone should be empathetic, insightful, and empowering. Your audience craves connection, authenticity, and the wisdom that helps them grow emotionally and spiritually. They are familiar with the deeper emotional dynamics between men and women, and they want to explore complex, healing-based topics that resonate with their experiences.
+
+The goal is to create a series of messages in the tone of a trusted friend, that concludes by informing the reader of my "7-Day Conscious Love Challenge" and invites engagement, asking readers to leave a specific comment "CHALLENGE" for more information. 
+
+THE NAME OF THE PROGRAM AND THE COMMENT TRIGGER NEED TO MATCH EXACTLY DO NOT CHANGE THEM AT ALL.
+
+Start with a general observation of a symptom related to the topic through the lens of emotional healing, then take the reader on a journey of self-discovery or relational insights, and end with a call to action (CTA) that invites them to join the challenge.
+
+Each slide is written in the third person perspective of women or the feminine nature, exactly three sentences in paragraph form. Limited to a 8th grade reading level.
+
+If a topic is addressing men, it should be as advise to women to support, communicate, or connect with their men. THE AUDIENCE IS EXCLUSIVELY WOMEN.
+
+### **Structure for Response Format (10-slide carousel):**
+
+1. **Provocation of Problem (Slide 1):**
+- Provoke introspection related to the topic by declaring a statement of observation related to internal state.
+- Example: *“Many women feel like relationships lose their spark even when both partners care deeply.”*
+
+2. **Acknowledging the Problem (Slide 2):**
+- Describe the emotional or relational issue clearly.
+- Example: *“It’s not about love fading. It’s about disconnection, routines, and unhealed wounds keeping us apart.”*
+
+3. **Exploring the Underlying Causes (Slide 3):**
+- Introduce the root causes, focusing on the relational dynamics between the feminine and masculine.
+- Example: *“Often, women seek emotional depth, while men focus on external needs. This mismatch creates tension, not intimacy.”*
+
+4. **Feminine Perspective (Slide 4):**
+- Dive deeper into the emotional needs and journey of the feminine, using a compassionate tone.
+- Example: *“The feminine craves depth, safety, and emotional presence. When she doesn’t get this, she feels unseen and unheard.”*
+
+5. **Masculine Perspective (Slide 5):**
+- Offer insights into the masculine journey, framing it in a way that creates understanding and empathy.
+- Example: *“The masculine, on the other hand, is wired to protect and provide. He may feel like he’s doing his part, but emotional presence is where the gap lies.”*
+
+6. **Identify the Breakdown (Slide 6):**
+- Explain how the misalignment in these needs leads to relational struggles.
+- Example: *“When both partners focus only on what’s missing, intimacy dies, and the relationship begins to feel like a transactional exchange.”*
+
+7. **Solution (Slide 7):**
+- Offer an actionable insight or solution, focusing on healing or growth.
+- Example: *“The way forward is through mutual vulnerability. The feminine leads with her heart, and the masculine follows with his presence.”*
+
+8. **Empowerment for Women (Slide 8):**
+- Speak directly to the feminine, empowering her to reclaim her truth and boundaries.
+- Example: *“Ladies, your softness is a gift—but only when shared with someone who makes you feel safe. You deserve a love that honors your worth.”*
+
+9. **Call to Action (Slide 9):**
+- End with a CTA that informs the reader of a solution my "7-Day Conscious Love Challenge" and invites engagement as an extension of the slide contents, asking readers to comment "CHALLENGE" for more information. THE NAME OF THE PROGRAM AND THE COMMENT TRIGGER NEED TO MATCH EXACTLY DO NOT CHANGE THEM AT ALL.
+- Example: *“Im leading a 7-Day Conscious Love Challenge where I will guide you in the essential healing practices that empower the feminine and deepen the masculine allowing you to continually open yourself in partnership and create conscious love. Drop the word CHALLENGE in the comments and I'l send you the details.”*
+
+10. Encouragement and reiterating call to action.
+- optional steps should add additional context to the call to action through encouragement and hope.
+
+Follow this structure to create a 10-slide carousel that will drive engagement and inspire meaningful interaction and curiosity.`
+                        },
+                        {
+                            title: 'Long for AIDA With Worksheet', value: `Start by identifying the problem and the reader’s pain points. Amplify the emotional and practical consequences of not solving the issue. Then, introduce a parable that mirrors the reader’s situation, subtly presenting the advice through this narrative. Transition smoothly into showing how solving the problem will lead to a powerful transformation. Once the benefits and changes are clear, present the invitation — a worksheet directly related to the advice — as the solution. Finally, end with a direct call to action.`
+                        }
+                    ]);
+                });
+            }
+        };
+
+        new Vue({
+            el: '#app',
+            vuetify: new Vuetify(),
+            data() {
+                return {
+                    selectedAudience: null,
+                    selectedChallenge: null,
+                    selectedSymptom: null,
+                    selectedFormat: null,
+                    selectedTone: null,
+                    selectedMood: null,
+                    audiences: [],
+                    symptoms: [],
+                    challenges: [],
+                    formats: [],
+                    tones: ['Compassionate', 'Empathetic', 'Empowering', 'Thought-provoking'],
+                    moods: ['Reflective', 'Intimate', 'Emotionally charged', 'Optimistic']
+                };
+            },
+            computed: {
+                generatedPrompt() {
+                    const format = this.selectedFormat ? this.selectedFormat.value : '___';
+                    const audience = this.selectedAudience ? this.selectedAudience.value : '___';
+                    const challenge = this.selectedChallenge ? this.selectedChallenge.value : '___';
+                    const symptom = this.selectedSymptom ? this.selectedSymptom.value : '___';
+                    const tone = this.selectedTone ? this.selectedTone : '___';
+                    const mood = this.selectedMood ? this.selectedMood : '___';
+                    return `**Tone:** ${tone}.\n- **Mood:** ${mood}.\n- **Audience:** ${audience}.\n- **Context:** ${challenge}.\n- **Symptom:** ${symptom}.\n- **Instructions:** ${format}`;
+                }
+            },
+            methods: {
+                clearSelections() {
+                    this.selectedAudience = null;
+                    this.selectedChallenge = null;
+                    this.selectedFormat = null;
+                    this.selectedSymptom = null;
+                    this.selectedTone = null;
+                    this.selectedMood = null;
+                },
+                copyToClipboard() {
+                    const text = this.generatedPrompt;
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert('Prompt copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                }
+            },
+            created() {
+                DataService.getAudiences().then(data => this.audiences = data);
+                DataService.getSymptoms().then(data => this.symptoms = data);
+                DataService.getChallenges().then(data => this.challenges = data);
+                DataService.getFormats().then(data => this.formats = data);
+                // DataService.getTones().then(data => this.tones = data);
+                // DataService.getMoods().then(data => this.moods = data);
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

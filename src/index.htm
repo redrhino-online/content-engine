@@ -33,8 +33,8 @@
                 <v-form>
                     <v-row>
                         <v-col cols="12" lg="3" sm="12">
-                            <v-select v-model="selectedFormat" :items="formats" label="Select Format" item-text="title"
-                                item-value="value" return-object></v-select>
+                            <v-select v-model="selectedInstruction" :items="instructions" label="Select Instruction"
+                                item-text="title" item-value="value" return-object></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedAudience" :items="audiences" label="Select Audience"
@@ -239,7 +239,7 @@
                 });
             },
 
-            getFormats() {
+            getInstructions() {
                 return new Promise((resolve) => {
                     resolve([
                         {
@@ -317,33 +317,33 @@ Follow this structure to create a 10-slide carousel that will drive engagement a
                     selectedAudience: null,
                     selectedChallenge: null,
                     selectedSymptom: null,
-                    selectedFormat: null,
+                    selectedInstruction: null,
                     selectedTone: null,
                     selectedMood: null,
                     audiences: [],
                     symptoms: [],
                     challenges: [],
-                    formats: [],
+                    instructions: [],
                     tones: ['Compassionate', 'Empathetic', 'Empowering', 'Thought-provoking'],
                     moods: ['Reflective', 'Intimate', 'Emotionally charged', 'Optimistic']
                 };
             },
             computed: {
                 generatedPrompt() {
-                    const format = this.selectedFormat ? this.selectedFormat.value : '___';
+                    const instruction = this.selectedInstruction ? this.selectedInstruction.value : '___';
                     const audience = this.selectedAudience ? this.selectedAudience.value : '___';
                     const challenge = this.selectedChallenge ? this.selectedChallenge.value : '___';
                     const symptom = this.selectedSymptom ? this.selectedSymptom.value : '___';
                     const tone = this.selectedTone ? this.selectedTone : '___';
                     const mood = this.selectedMood ? this.selectedMood : '___';
-                    return `Tone: ${tone}.\nMood: ${mood}.\nAudience: ${audience}.\nContext: ${challenge}.\nSymptom: ${symptom}.\nInstructions: ${format}`;
+                    return `Tone: ${tone}.\nMood: ${mood}.\nAudience: ${audience}.\nContext: ${challenge}.\nSymptom: ${symptom}.\nInstructions: ${instruction}`;
                 }
             },
             methods: {
                 clearSelections() {
                     this.selectedAudience = null;
                     this.selectedChallenge = null;
-                    this.selectedFormat = null;
+                    this.selectedInstruction = null;
                     this.selectedSymptom = null;
                     this.selectedTone = null;
                     this.selectedMood = null;
@@ -361,7 +361,7 @@ Follow this structure to create a 10-slide carousel that will drive engagement a
                 DataService.getAudiences().then(data => this.audiences = data);
                 DataService.getSymptoms().then(data => this.symptoms = data);
                 DataService.getChallenges().then(data => this.challenges = data);
-                DataService.getFormats().then(data => this.formats = data);
+                DataService.getInstructions().then(data => this.instructions = data);
                 // DataService.getTones().then(data => this.tones = data);
                 // DataService.getMoods().then(data => this.moods = data);
             }

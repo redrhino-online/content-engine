@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src', 'index.htm'));
 });
 
+app.get('/data.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'src', 'data.js'));
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

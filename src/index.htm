@@ -138,7 +138,7 @@
                 });
 
                 DataService.getSymptoms().then(data => {
-                    this.symptoms = data.sort((a, b) => a.name.localeCompare(b.name));
+                    this.symptoms = data.sort((a, b) => a.title.localeCompare(b.title));
                 });
 
                 DataService.getChallenges().then(data => {

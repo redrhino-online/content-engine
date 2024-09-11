@@ -33,6 +33,10 @@
                 <v-form>
                     <v-row>
                         <v-col cols="12" lg="3" sm="12">
+                            <v-select v-model="selectedClient" :items="clients" label="Select Client" item-text="title"
+                                item-value="value" @change="loadClientData"></v-select>
+                        </v-col>
+                        <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedInstruction" :items="instructions" label="Select Instruction"
                                 item-text="title" item-value="value" return-object></v-select>
                         </v-col>
@@ -82,7 +86,6 @@
         </v-app>
     </div>
 
-    <script src="data.js"></script>
     <script>
         new Vue({
             el: '#app',
@@ -95,10 +98,15 @@
                     selectedInstruction: null,
                     selectedTone: null,
                     selectedMood: null,
+                    selectedClient: null,
                     audiences: [],
                     symptoms: [],
                     challenges: [],
                     instructions: [],
+                    clients: [
+                        { title: 'The Living Relationship', value: 'tlr' },
+                        { title: 'The Momentum Institute', value: 'tmi' }
+                    ],
                     tones: ['Compassionate', 'Empathetic', 'Empowering', 'Thought-provoking'],
                     moods: ['Reflective', 'Intimate', 'Emotionally charged', 'Optimistic']
                 };
@@ -116,12 +124,28 @@
             },
             methods: {
                 clearSelections() {
+                    this.selectedClient = null;
                     this.selectedAudience = null;
                     this.selectedChallenge = null;
                     this.selectedInstruction = null;
                     this.selectedSymptom = null;
                     this.selectedTone = null;
                     this.selectedMood = null;
+                },
+                async loadClientData() {
+                    if (!this.selectedClient) return;
+
+                    try {
+                        const response = await fetch(`./data/${this.selectedClient}.json`);
+                        const data = await response.json();
+
+                        this.audiences = data.audiences.sort((a, b) => a.title.localeCompare(b.title));
+                        this.symptoms = data.symptoms.sort((a, b) => a.title.localeCompare(b.title));
+                        this.challenges = data.challenges.sort((a, b) => a.title.localeCompare(b.title));
+                        this.instructions = data.instructions.sort((a, b) => a.title.localeCompare(b.title));
+                    } catch (error) {
+                        console.error('Error loading client data:', error);
+                    }
                 },
                 copyToClipboard() {
                     const text = this.generatedPrompt;
@@ -133,24 +157,6 @@
                 }
             },
             created() {
-                DataService.getAudiences().then(data => {
-                    this.audiences = data.sort((a, b) => a.title.localeCompare(b.title));
-                });
-
-                DataService.getSymptoms().then(data => {
-                    this.symptoms = data.sort((a, b) => a.title.localeCompare(b.title));
-                });
-
-                DataService.getChallenges().then(data => {
-                    this.challenges = data.sort((a, b) => a.title.localeCompare(b.title));
-                });
-
-                DataService.getInstructions().then(data => {
-                    this.instructions = data.sort((a, b) => a.title.localeCompare(b.title));
-                });
-
-                // DataService.getTones().then(data => this.tones = data);
-                // DataService.getMoods().then(data => this.moods = data);
             }
         });
 

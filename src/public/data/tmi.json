@@ -1,0 +1,20 @@
+{
+    "audiences": [
+        { "title": "Young Professionals", "value": "Young Professionals" }
+    ],
+    "symptoms": [
+        { "title": "Career Stagnation", "value": "Career Stagnation" }
+    ],
+    "challenges": [
+        {
+            "title": "Balancing Work and Life",
+            "value": "Balancing Work and Life: Managing the demands of a career while maintaining a fulfilling personal life can be challenging. You might feel stressed, overworked, and unable to find time for yourself or your loved ones."
+        }
+    ],
+    "instructions": [
+        {
+            "title": "Goal Setting Workshop",
+            "value": "Conduct a workshop focused on setting and achieving personal and professional goals. Start by identifying the participant's current challenges and aspirations. Use interactive exercises to help them visualize their goals and create actionable steps. Encourage sharing and feedback to foster a supportive environment. Conclude with a commitment to follow-up actions and a plan for accountability."
+        }
+    ]
+}

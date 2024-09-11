@@ -205,7 +205,9 @@ This structure creates a space for the audience to feel understood, challenges t
 
 Only respond with the slide content - one per line
 
-NO need for titles, formatting, or slide numbers`
+NO need for titles, formatting, or slide numbers
+
+Each slide should be a short paragraph of multiple sentences. Write in third person perspective with "many women" in general as the focus`
                 },
                 {
                     title: 'Instagram Series 2',
@@ -272,7 +274,9 @@ Follow this structure for creating the content:
 
 Only respond with the slide content - one per line
 
-NO need for titles OR, formatting`
+NO need for titles OR, formatting
+
+Each slide should be a short paragraph of multiple sentences. Write in third person perspective with "many women" in general as the focus`
                 },
                 {
                     title: 'Instagram Series 1',
@@ -336,6 +340,8 @@ Follow this structure to create a 10-slide carousel that will drive engagement a
 Only respond with the slide content - one per line
 
 NO need for titles OR, formatting
+
+Each slide should be a short paragraph of multiple sentences. Write in third person perspective with "many women" in general as the focus
 `
                 },
                 {

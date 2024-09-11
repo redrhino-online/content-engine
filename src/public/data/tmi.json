@@ -39,6 +39,46 @@
         {
             "title": "Workaholics",
             "value": "Workaholics"
+        },
+        {
+            "title": "High School Teachers",
+            "value": "High School Teachers"
+        },
+        {
+            "title": "Corporate Managers",
+            "value": "Corporate Managers"
+        },
+        {
+            "title": "Small Business Owners",
+            "value": "Small Business Owners"
+        },
+        {
+            "title": "Tech Industry Professionals",
+            "value": "Tech Industry Professionals"
+        },
+        {
+            "title": "Creative Professionals",
+            "value": "Creative Professionals"
+        },
+        {
+            "title": "Healthcare Workers",
+            "value": "Healthcare Workers"
+        },
+        {
+            "title": "Military Service Members",
+            "value": "Military Service Members"
+        },
+        {
+            "title": "Non-Profit Organization Staff",
+            "value": "Non-Profit Organization Staff"
+        },
+        {
+            "title": "Academic Researchers",
+            "value": "Academic Researchers"
+        },
+        {
+            "title": "Athletes and Coaches",
+            "value": "Athletes and Coaches"
         }
     ],
     "symptoms": [
@@ -81,9 +121,89 @@
         {
             "title": "Unresolved Emotional Issues",
             "value": "Unresolved Emotional Issues"
+        },
+        {
+            "title": "Chronic Stress",
+            "value": "Chronic Stress"
+        },
+        {
+            "title": "Professional Burnout",
+            "value": "Professional Burnout"
+        },
+        {
+            "title": "Feeling Stuck in Routine",
+            "value": "Feeling Stuck in Routine"
+        },
+        {
+            "title": "Lack of Self-Confidence",
+            "value": "Lack of Self-Confidence"
+        },
+        {
+            "title": "Disconnection from Personal Goals",
+            "value": "Disconnection from Personal Goals"
+        },
+        {
+            "title": "Frequent Self-Doubt",
+            "value": "Frequent Self-Doubt"
+        },
+        {
+            "title": "Difficulty in Prioritizing Tasks",
+            "value": "Difficulty in Prioritizing Tasks"
+        },
+        {
+            "title": "Lack of Purpose",
+            "value": "Lack of Purpose"
+        },
+        {
+            "title": "Emotional Exhaustion",
+            "value": "Emotional Exhaustion"
+        },
+        {
+            "title": "Difficulty in Managing Workload",
+            "value": "Difficulty in Managing Workload"
         }
     ],
     "challenges": [
+        {
+            "title": "Improving Time Management",
+            "value": "Improving Time Management: Efficiently organizing and prioritizing tasks can be challenging. You might struggle with balancing various responsibilities and meeting deadlines effectively."
+        },
+        {
+            "title": "Enhancing Communication Skills",
+            "value": "Enhancing Communication Skills: Developing clear and effective communication can be difficult. You may find it hard to convey your ideas or manage conversations in both personal and professional settings."
+        },
+        {
+            "title": "Navigating Workplace Politics",
+            "value": "Navigating Workplace Politics: Managing relationships and power dynamics at work can be tricky. You might face challenges in maintaining professional integrity while dealing with office politics."
+        },
+        {
+            "title": "Building a Support Network",
+            "value": "Building a Support Network: Establishing a reliable and supportive network of colleagues and mentors can be tough. You might struggle to find and maintain meaningful professional connections."
+        },
+        {
+            "title": "Developing Emotional Intelligence",
+            "value": "Developing Emotional Intelligence: Understanding and managing your emotions and those of others can be challenging. You might struggle with empathy, self-awareness, and emotional regulation."
+        },
+        {
+            "title": "Handling Career Uncertainty",
+            "value": "Handling Career Uncertainty: Dealing with uncertainty about your career path can be stressful. You may find it difficult to make decisions or feel anxious about future prospects."
+        },
+        {
+            "title": "Setting and Achieving Goals",
+            "value": "Setting and Achieving Goals: Defining and reaching personal and professional goals can be challenging. You might face difficulties in creating actionable plans and staying motivated."
+        },
+        {
+            "title": "Managing Personal Finances",
+            "value": "Managing Personal Finances: Effectively handling your finances can be a struggle. You may experience stress related to budgeting, saving, and financial planning."
+        },
+        {
+            "title": "Maintaining Work Satisfaction",
+            "value": "Maintaining Work Satisfaction: Keeping a high level of job satisfaction over time can be challenging. You might feel discontented or lose motivation in your current role."
+        },
+        {
+            "title": "Achieving Long-Term Career Growth",
+            "value": "Achieving Long-Term Career Growth: Ensuring continuous progress in your career can be difficult. You might struggle with finding opportunities for advancement and maintaining professional development."
+        },
         {
             "title": "Navigating Career Transitions",
             "value": "Navigating Career Transitions: Adjusting to a new role or industry can be daunting. You might face uncertainty about your future path and struggle with adapting to new expectations or environments."

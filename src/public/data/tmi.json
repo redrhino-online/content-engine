@@ -1,14 +1,128 @@
 {
     "audiences": [
-        { "title": "Young Professionals", "value": "Young Professionals" }
+        {
+            "title": "Mid-Career Professionals",
+            "value": "Mid-Career Professionals"
+        },
+        {
+            "title": "Aspiring Entrepreneurs",
+            "value": "Aspiring Entrepreneurs"
+        },
+        {
+            "title": "College Graduates",
+            "value": "College Graduates"
+        },
+        {
+            "title": "Recent Job Seekers",
+            "value": "Recent Job Seekers"
+        },
+        {
+            "title": "Veterans Transitioning to Civilian Life",
+            "value": "Veterans Transitioning to Civilian Life"
+        },
+        {
+            "title": "High-Earning Executives",
+            "value": "High-Earning Executives"
+        },
+        {
+            "title": "Men Experiencing Midlife Crisis",
+            "value": "Men Experiencing Midlife Crisis"
+        },
+        {
+            "title": "Freelancers and Gig Workers",
+            "value": "Freelancers and Gig Workers"
+        },
+        {
+            "title": "Men in Leadership Roles",
+            "value": "Men in Leadership Roles"
+        },
+        {
+            "title": "Workaholics",
+            "value": "Workaholics"
+        }
     ],
     "symptoms": [
-        { "title": "Career Stagnation", "value": "Career Stagnation" }
+        {
+            "title": "Lack of Fulfillment",
+            "value": "Lack of Fulfillment"
+        },
+        {
+            "title": "Loss of Direction",
+            "value": "Loss of Direction"
+        },
+        {
+            "title": "Inconsistent Motivation",
+            "value": "Inconsistent Motivation"
+        },
+        {
+            "title": "Feeling Overwhelmed",
+            "value": "Feeling Overwhelmed"
+        },
+        {
+            "title": "Sense of Isolation",
+            "value": "Sense of Isolation"
+        },
+        {
+            "title": "Unclear Life Goals",
+            "value": "Unclear Life Goals"
+        },
+        {
+            "title": "Difficulty in Setting Boundaries",
+            "value": "Difficulty in Setting Boundaries"
+        },
+        {
+            "title": "Frustration with Career Progression",
+            "value": "Frustration with Career Progression"
+        },
+        {
+            "title": "High Stress Levels",
+            "value": "High Stress Levels"
+        },
+        {
+            "title": "Unresolved Emotional Issues",
+            "value": "Unresolved Emotional Issues"
+        }
     ],
     "challenges": [
         {
-            "title": "Balancing Work and Life",
-            "value": "Balancing Work and Life: Managing the demands of a career while maintaining a fulfilling personal life can be challenging. You might feel stressed, overworked, and unable to find time for yourself or your loved ones."
+            "title": "Navigating Career Transitions",
+            "value": "Navigating Career Transitions: Adjusting to a new role or industry can be daunting. You might face uncertainty about your future path and struggle with adapting to new expectations or environments."
+        },
+        {
+            "title": "Building a Personal Brand",
+            "value": "Building a Personal Brand: Creating a distinct and authentic personal brand can be challenging. You may feel overwhelmed by the need to differentiate yourself and establish credibility in a competitive market."
+        },
+        {
+            "title": "Developing Leadership Skills",
+            "value": "Developing Leadership Skills: Cultivating effective leadership abilities is often difficult. You might struggle with understanding how to inspire and guide others while managing your own responsibilities."
+        },
+        {
+            "title": "Achieving Work-Life Balance",
+            "value": "Achieving Work-Life Balance: Balancing professional responsibilities with personal life is a common struggle. You might experience stress and burnout from trying to meet the demands of both areas."
+        },
+        {
+            "title": "Maintaining Motivation During Setbacks",
+            "value": "Maintaining Motivation During Setbacks: Facing setbacks can challenge your motivation. You might find it hard to stay focused and persistent when progress stalls or obstacles arise."
+        },
+        {
+            "title": "Managing Financial Pressures",
+            "value": "Managing Financial Pressures: Financial stress can impact your overall well-being. You may feel anxious about managing expenses and achieving long-term financial goals."
+        },
+        {
+            "title": "Finding Purpose Beyond Success",
+            "value": "Finding Purpose Beyond Success: Defining a meaningful purpose beyond career achievements can be difficult. You might feel a lack of satisfaction despite professional accomplishments."
+        },
+        {
+            "title": "Building Resilience",
+            "value": "Building Resilience: Developing the ability to bounce back from challenges is crucial. You might struggle with maintaining resilience in the face of personal or professional difficulties."
+        },
+        {
+            "title": "Fostering Healthy Relationships",
+            "value": "Fostering Healthy Relationships: Building and maintaining strong relationships can be challenging. You might experience difficulties in creating meaningful connections and managing interpersonal dynamics."
+        },
+        {
+            "title": "Overcoming Procrastination",
+            "value": "Overcoming Procrastination: Procrastination can hinder your progress toward goals. You might find it difficult to stay focused and take action on important tasks and projects."
         }
     ],
     "instructions": [

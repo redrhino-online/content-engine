@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Engine</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.5.10/dist/vuetify.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.5.10/dist/vuetify.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.5.10/dist/vuetify.js"></script>
     <style>
         .responsive-container {
             max-width: 100%;
@@ -34,33 +35,33 @@
                     <v-row>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedClient" :items="clients" label="Select Client" item-text="title"
-                                item-value="value" @change="loadClientData"></v-select>
+                                item-value="value" @change="loadClientData" clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedInstruction" :items="instructions" label="Select Instruction"
-                                item-text="title" item-value="value" return-object @change="saveSelections"></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedAudience" :items="audiences" label="Select Audience"
-                                item-text="title" item-value="value" return-object @change="saveSelections"></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedChallenge" :items="challenges" label="Select Challenge"
-                                item-text="title" item-value="value" return-object @change="saveSelections"></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedSymptom" :items="symptoms" label="Select Symptom"
-                                item-text="title" item-value="value" return-object @change="saveSelections"></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
                         </v-col>
                     </v-row>
 
                     <v-row>
                         <v-col cols="12" lg="6" sm="12">
-                            <v-select v-model="selectedTone" :items="tones" label="Select Tone" @change="saveSelections"></v-select>
+                            <v-select v-model="selectedTone" :items="tones" label="Select Tone" @change="saveSelections" clearable></v-select>
                         </v-col>
 
                         <v-col cols="12" lg="6" sm="12">
-                            <v-select v-model="selectedMood" :items="moods" label="Select Mood" @change="saveSelections"></v-select>
+                            <v-select v-model="selectedMood" :items="moods" label="Select Mood" @change="saveSelections" clearable></v-select>
                         </v-col>
                     </v-row>
 
@@ -113,13 +114,14 @@
             },
             computed: {
                 generatedPrompt() {
-                    const instruction = this.selectedInstruction ? this.selectedInstruction.value : '___';
-                    const audience = this.selectedAudience ? this.selectedAudience.value : '___';
-                    const challenge = this.selectedChallenge ? this.selectedChallenge.value : '___';
-                    const symptom = this.selectedSymptom ? this.selectedSymptom.value : '___';
-                    const tone = this.selectedTone ? this.selectedTone : '___';
-                    const mood = this.selectedMood ? this.selectedMood : '___';
-                    return `Tone: ${tone}.\nMood: ${mood}.\nAudience: ${audience}.\nContext: ${challenge}.\nSymptom: ${symptom}.\nInstructions: ${instruction}`;
+                    const parts = [];
+                    if (this.selectedTone) parts.push(`Tone: ${this.selectedTone}.`);
+                    if (this.selectedMood) parts.push(`Mood: ${this.selectedMood}.`);
+                    if (this.selectedAudience) parts.push(`Audience: ${this.selectedAudience.value}.`);
+                    if (this.selectedChallenge) parts.push(`Context: ${this.selectedChallenge.value}.`);
+                    if (this.selectedSymptom) parts.push(`Symptom: ${this.selectedSymptom.value}.`);
+                    if (this.selectedInstruction) parts.push(`Instructions: ${this.selectedInstruction.value}.`);
+                    return parts.join('\n');
                 }
             },
             methods: {

@@ -40,36 +40,43 @@
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedInstruction" :items="instructions" label="Select Instruction"
-                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections"
+                                clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedAudience" :items="audiences" label="Select Audience"
-                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections"
+                                clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedChallenge" :items="challenges" label="Select Challenge"
-                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections"
+                                clearable></v-select>
                         </v-col>
                         <v-col cols="12" lg="3" sm="12">
                             <v-select v-model="selectedSymptom" :items="symptoms" label="Select Symptom"
-                                item-text="title" item-value="value" return-object @change="saveSelections" clearable></v-select>
+                                item-text="title" item-value="value" return-object @change="saveSelections"
+                                clearable></v-select>
                         </v-col>
                     </v-row>
 
                     <v-row>
                         <v-col cols="12" lg="6" sm="12">
-                            <v-select v-model="selectedTone" :items="tones" label="Select Tone" @change="saveSelections" clearable></v-select>
+                            <v-select v-model="selectedTone" :items="tones" label="Select Tone" @change="saveSelections"
+                                clearable></v-select>
                         </v-col>
 
                         <v-col cols="12" lg="6" sm="12">
-                            <v-select v-model="selectedMood" :items="moods" label="Select Mood" @change="saveSelections" clearable></v-select>
+                            <v-select v-model="selectedMood" :items="moods" label="Select Mood" @change="saveSelections"
+                                clearable></v-select>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="12">
                             <v-btn :disabled="isLoading" @click="generateContent" color="green">
                                 Generate
-                                <v-progress-circular v-if="isLoading" indeterminate color="white" size="20"></v-progress-circular>
+                                <v-progress-circular v-if="isLoading" indeterminate color="white"
+                                    size="20"></v-progress-circular>
                             </v-btn>
                             <v-btn v-if="responseContent" @click="copyOriginalContent" color="blue" class="ml-2">
                                 Copy Content
@@ -82,7 +89,7 @@
                             <v-btn @click="copyToClipboard" color="blue">Copy Prompt</v-btn>
                         </v-col>
                     </v-row>
-                    
+
                     <v-row>
                         <v-col cols="12">
                             <v-btn @click="clearSelections" color="red">Clear All</v-btn>
@@ -90,7 +97,8 @@
                     </v-row>
                     <v-row>
                         <v-col cols="12">
-                            <v-textarea id="prompt" label="Prompt" :value="generatedPrompt" readonly auto-grow></v-textarea>
+                            <v-textarea id="prompt" label="Prompt" :value="generatedPrompt" readonly
+                                auto-grow></v-textarea>
                         </v-col>
                     </v-row>
                 </v-form>
@@ -102,7 +110,7 @@
         new Vue({
             el: '#app',
             vuetify: new Vuetify(),
-            data() { 
+            data() {
                 return {
                     selectedAudience: null,
                     selectedChallenge: null,
@@ -111,14 +119,12 @@
                     selectedTone: null,
                     selectedMood: null,
                     selectedClient: null,
+                    systemContext: null,
                     audiences: [],
                     symptoms: [],
                     challenges: [],
                     instructions: [],
-                    clients: [
-                        { title: 'The Living Relationship', value: 'tlr' },
-                        { title: 'The Momentum Institute', value: 'tmi' }
-                    ],
+                    clients: [],
                     tones: ['Compassionate', 'Empathetic', 'Empowering', 'Thought-provoking'],
                     moods: ['Reflective', 'Intimate', 'Emotionally charged', 'Optimistic'],
                     isLoading: false,
@@ -149,7 +155,10 @@
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ prompt: this.generatedPrompt })
+                            body: JSON.stringify({
+                                prompt: this.generatedPrompt,
+                                system: this.systemContext
+                            })
                         });
 
                         const data = await response.json();
@@ -176,13 +185,14 @@
                     this.selectedSymptom = null;
                     this.selectedTone = null;
                     this.selectedMood = null;
-                    this.saveSelections();
+                    this.systemContext = null
                     this.audiences = [];
                     this.symptoms = [];
                     this.challenges = [];
                     this.instructions = [];
                     const responseDiv = document.getElementById('response');
                     responseDiv.innerHTML = '';
+                    this.saveSelections();
                 },
                 saveSelections() {
                     localStorage.setItem('selectedClient', this.selectedClient);
@@ -192,6 +202,19 @@
                     localStorage.setItem('selectedSymptom', JSON.stringify(this.selectedSymptom));
                     localStorage.setItem('selectedTone', this.selectedTone);
                     localStorage.setItem('selectedMood', this.selectedMood);
+                    localStorage.setItem('systemContext', this.systemContext);
+                },
+                async loadClientTitles() {
+                    try {
+                        const clientFiles = ['tlr', 'tmi'];
+                        this.clients = await Promise.all(clientFiles.map(async (client) => {
+                            const response = await fetch(`./data/${client}.json`);
+                            const data = await response.json();
+                            return { title: data.title, value: client };
+                        }));
+                    } catch (error) {
+                        console.error('Error loading client titles:', error);
+                    }
                 },
                 loadSelections() {
                     const client = localStorage.getItem('selectedClient');
@@ -208,6 +231,9 @@
 
                         const symptom = localStorage.getItem('selectedSymptom');
                         this.selectedSymptom = symptom !== "null" ? JSON.parse(symptom) : null;
+
+                        const systemContext = localStorage.getItem('systemContext');
+                        this.systemContext = systemContext !== "null" ? JSON.parse(systemContext) : null;
                     });
 
                     const tone = localStorage.getItem('selectedTone');
@@ -223,6 +249,7 @@
                         const response = await fetch(`./data/${this.selectedClient}.json`);
                         const data = await response.json();
 
+                        this.systemContext = data.systemContext;
                         this.audiences = data.audiences.sort((a, b) => a.title.localeCompare(b.title));
                         this.symptoms = data.symptoms.sort((a, b) => a.title.localeCompare(b.title));
                         this.challenges = data.challenges.sort((a, b) => a.title.localeCompare(b.title));
@@ -241,8 +268,9 @@
                 }
             },
             created() {
+                this.loadClientTitles();
                 this.loadSelections();
-            }
+            },
         });
 
     </script>

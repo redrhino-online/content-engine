@@ -16,13 +16,13 @@ const {
 } = process.env;
 
 app.post('/generate', async (req, res) => {
-    const { prompt } = req.body;
+    const { prompt, system } = req.body;
 
     try {
         const response = await axios.post('https://api.openai.com/v1/chat/completions', {
             model: 'gpt-4o',
             messages: [
-                { role: 'system', content: 'You are a helpful assistant.' },
+                { role: 'system', content: system },
                 { role: 'user', content: prompt }
             ],
         }, {

@@ -25,6 +25,7 @@ app.post('/generate', async (req, res) => {
                 { role: 'system', content: system },
                 { role: 'user', content: prompt }
             ],
+            temperature: 0.8
         }, {
             headers: {
                 'Authorization': `Bearer ${OPENAI_API_KEY}`,
